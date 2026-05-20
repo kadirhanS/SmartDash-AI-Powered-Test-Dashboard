@@ -201,7 +201,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <AppHeader navOpen={navOpen} setNavOpen={setNavOpen} toggleTheme={toggleTheme} />
+      <AppHeader navOpen={navOpen} setNavOpen={setNavOpen} toggleTheme={toggleTheme} onOpenFilter={() => setSidebarOpen(true)} />
 
       {/* ── Body: Sidebar + Main ── */}
       <div className="flex flex-1 relative">

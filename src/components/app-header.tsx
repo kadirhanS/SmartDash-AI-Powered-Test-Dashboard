@@ -19,6 +19,7 @@ interface AppHeaderProps {
   navOpen: boolean;
   setNavOpen: (open: boolean) => void;
   toggleTheme: () => void;
+  onOpenFilter?: () => void;
 }
 
 // ── Navigation link definitions ──
@@ -30,7 +31,7 @@ const navLinks = [
 
 // Drawer uses the same links as nav + filter
 
-export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeaderProps) {
+export default function AppHeader({ navOpen, setNavOpen, toggleTheme, onOpenFilter }: AppHeaderProps) {
   const [activeLink, setActiveLink] = useState("dashboard");
 
   const scrollToSection = (sectionId: string) => {
@@ -161,7 +162,10 @@ export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeade
 
               {/* Filter link */}
               <button
-                onClick={() => scrollToSection("filtreler")}
+                onClick={() => {
+                  setNavOpen(false);
+                  onOpenFilter?.();
+                }}
                 className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
               >
                 <Filter className="size-5" />
