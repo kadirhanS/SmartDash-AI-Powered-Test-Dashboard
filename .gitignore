@@ -40,4 +40,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# opencode / agent config (private)
+.opencode/
+
+# AI agent instructions (private)
+CLAUDE.md
+AGENTS.md
+
+# internal planning & dev notes (private)
+docs/plan.md
+docs/dev-notes.md
+
+# test artifacts
+scr.mjs
+404-screenshot.png
+test-results/
