@@ -1,0 +1,247 @@
+{
+  "entities": [
+    {
+      "name": "SmartDash",
+      "entityType": "Proje",
+      "observations": [
+        "AI destekli Test Dashboard — JUnit XML analizi + AI yorumları",
+        "Vibe Coder modeliyle geliştiriliyor: AI agent kod yazar, Kadirhan yönetir/review eder",
+        "Portföy projesi: AI yönetimi yeteneğini kanıtlamak için",
+        "Tüm teknolojiler açık kaynak, ücretsiz ve güvenli olmalı",
+        "Hafta 2 tamamlandı: JUnit XML parser, API route, frontend entegrasyonu",
+        "src/lib/types.ts — TestSuite ve TestCase TypeScript tipleri",
+        "src/lib/parse-xml.ts — fast-xml-parser ile JUnit XML parsing servisi, çift yönlü (server+client)",
+        "src/app/api/parse-xml/route.ts — POST endpoint, multipart/form-data, JSON response",
+        "FileUpload component'ine onFileParsed/onFileRemove eklendi, API çağrısı tetikliyor",
+        "page.tsx Client Component — parsed data state', özet kart, badge'ler, progress bar",
+        "Run History özelliği EKLENECEK — karar verildi (önceden opsiyonel/beklemede idi)",
+        "Run History statüsü: planlandı (test sonrası başlanacak)",
+        "Yaklaşım: FileUpload'a geçmiş yüklemeler eklenecek, TestSuite[] dizisi + selectedIndex state'i",
+        "Tahmini süre: ~2-3 gün",
+        "docs/plan.md: Proje planı — 7/8 özellik tamam (✅), Run History planlandı (⏳)",
+        "docs/rate-limit.md: In-memory rate limiter dokümantasyonu (30 istek/dk, 5dk cleanup, 429 response)",
+        "docs/usage.md: Kullanım rehberi (Türkçe) — kurulum, XML yükleme, AI analiz, Dark/Light mod",
+        "hooks/use-toast.tsx: ToastProvider + ToastContext — addToast/removeToast, success/error/info tipleri, 5sn otomatik timeout, sağ üst konum",
+        "lib/rate-limit.ts: In-memory Map store ile sliding window rate limiter — Map<string, {count, resetAt}>, default 30 istek/dk, periyodik cleanup",
+        "components.json: shadcn/ui config — style: base-nova, RSC: true, iconLibrary: lucide, baseColor: neutral",
+        "AGENTS.md: Next.js v16 uyarısı — node_modules/next/dist/docs/ adresine yönlendirme",
+        "CLAUDE.md: @AGENTS.md yönlendirmesi",
+        ".opencode/opencode.json: MCP memory-project server tanımı (server-memory, graph.json path)",
+        ".opencode/agents/smartdash-pm.md: PM agent — read/glob/grep/task/web yetkisi, edit/write/bash onay gerektirir",
+        "test-data.xml: Örnek JUnit XML — 15 test (SmartDash.TestSuite), 3 failed, 2 error, 1 skipped",
+        "scr.mjs: Playwright script — localhost:3000/test-404 screenshot alır (404-screenshot.png, 1280x800)",
+        "Git reposu başlatılmamış — .gitignore mevcut, lokal dizinde",
+        "PDF Export: jsPDF 4.2.1 ile A4 profesyonel rapor (html2canvas kaldırıldı, OKLCH→hex override ile dark mode fix)",
+        "4 API route: /api/parse-xml (10/dk), /api/validate-key (20/dk), /api/models (30/dk), /api/analyze (10/dk)",
+        "Toplam 16+ React component: ui/ (9 adet), file-upload, ai-config-panel, test-charts, donut-chart, test-list, filter-sidebar, pdf-export, theme-provider, toast, skeletons",
+        "next.config.ts: Boş konfigürasyon (sadece type NextConfig)",
+        "postcss.config.mjs: Sadece @tailwindcss/postcss plugin",
+        "eslint.config.mjs: next/core-web-vitals + next/typescript, globalIgnores ile .next/out/build/ next-env.d.ts",
+        "tsconfig.json: target ES2017, moduleResolution bundler, strict: true, paths @/* → ./src/*",
+        "Tailwind CSS v4: CSS-first yaklaşım (tailwind.config dosyası yok), @tailwindcss/postcss ile",
+        "Tema: OKLCH renk değerleri, @theme inline ile CSS değişkenleri, @custom-variant dark (&:is(.dark *))",
+        "Dark mode: .dark class ile 20+ CSS değişkeni override, globals.css'de shadcn/ui + tw-animate-css importları"
+      ]
+    },
+    {
+      "name": "Stack",
+      "entityType": "Teknoloji",
+      "observations": [
+        "Next.js v16.2.6 (App Router) — frontend + backend",
+        "Tailwind CSS v4 + shadcn/ui base-nova — arayüz",
+        "Recharts v3 — grafikler",
+        "OpenRouter (gemini-2.0-flash) — AI yorumları",
+        "fast-xml-parser v5.8.0 — JUnit XML parse",
+        "Vercel — deploy (ücretsiz tier)",
+        "GitHub — versiyon kontrol"
+      ]
+    },
+    {
+      "name": "MVP Özellikleri",
+      "entityType": "Plan",
+      "observations": [
+        "JUnit XML yükleme (drag-drop / dosya seçici) ✅",
+        "XML parse edip test geçmişi, süre, hata dağılımı gösterme ✅",
+        "AI yorumu: her başarısız test için neden ve öneri ✅",
+        "Dashboard grafikleri: geçen/kalan, süre trendi ✅",
+        "Filtreleme: tarih, test adı, durum ✅",
+        "Responsive UI ✅",
+        "AI API Key + Model Seçme ✅",
+        "Dark Mode / Light Mode ✅",
+        "Test Listesi (sıralama + sayfalama + arama) ✅",
+        "PDF Export (html2canvas + jsPDF) ✅",
+        "Run History — planlandı, test sonrası başlanacak ⏳"
+      ]
+    },
+    {
+      "name": "AI Agent Çalışma Düzeni",
+      "entityType": "Plan",
+      "observations": [
+        "Kadirhan: haftalık 1 saat review, feature kararları, prompt mühendisliği, deploy",
+        "AI Agent: haftada ~10 saat kod, feature implementasyonu, refactor & cleanup",
+        "Her feature → branch → 3-5 commit → Kadirhan merge eder",
+        "Her hafta sonu stabil main branch'i",
+        "Commit formatı: feat/fix/refactor 🤖 AI-assisted"
+      ]
+    },
+    {
+      "name": "10 Haftalık Plan",
+      "entityType": "Plan",
+      "observations": [
+        "ORİJİNAL PLAN'dan sapıldı — gerçek geliştirme sırası farklı işledi: AI+grafikler öne çekildi, özellikler paralel ilerledi",
+        "GERÇEK Hafta 1 ✅: Dosya yükleme (drag-drop) + temel layout",
+        "GERÇEK Hafta 2 ✅: JUnit XML parser (fast-xml-parser) + API route /api/parse-xml + frontend entegrasyon",
+        "GERÇEK Hafta 3 ✅: AI API Key yönetimi + Model seçme paneli (sessionStorage) — 3 yeni API route: /api/validate-key, /api/models, /api/analyze",
+        "GERÇEK Hafta 3.5 ✅: Recharts grafikler (PieChart test dağılımı, BarChart hata dağılımı, DurationChart test süreleri)",
+        "GERÇEK Hafta 4 ✅: 21st.dev DonutChart (framer-motion animasyonlu) + Gradient Speed Bars (süreye göre renk kodu)",
+        "GERÇEK Hafta 5 ✅: Test Listesi (5 sütunlu tablo, sıralama, arama, sayfalama, expandable satırlar, AI Yorumu Popover)",
+        "GERÇEK Hafta 6 ✅: Dark/Light Mode + Filter Sidebar + Toast + Skeleton loading + Responsive + Bug Fix (BUG-001 PDF Export, BUG-002 ESLint)",
+        "KALAN: Run History (planlandı, test sonrası başlanacak), Vercel deploy, portföy sunumu"
+      ]
+    },
+    {
+      "name": "Kadirhan",
+      "entityType": "Kullanıcı",
+      "observations": [
+        "Vibe coder olarak konumlanıyor: AI kod yazar, ben yönetirim",
+        "QA background — Java + Selenium",
+        "SmartDash ile AI yönetimi yeteneğini kanıtlayacak",
+        "Progress Tracker projesi de var (QA programı takibi)"
+      ]
+    },
+    {
+      "name": "Tema Sistemi",
+      "entityType": "Tasarım",
+      "observations": [
+        "OKLCH renk değerleri ile CSS değişkenleri (Tailwind v4 CSS-first)",
+        "globals.css: @theme inline ile açık renk paleti, @custom-variant dark (&:is(.dark *))",
+        "Dark mode: .dark class ile 20+ CSS değişkeni override (bg, text, border, ring)",
+        "shadcn/ui ve tw-animate-css importları globals.css'de birleştirilmiş",
+        "charts renkleri badge renkleriyle tutarlı: #22c55e (pass), #ef4444 (fail), #f97316 (error), #94a3b8 (skip)",
+        "ThemeProvider: context-based, localStorage + system preference, geçişsiz animasyon"
+      ]
+    },
+    {
+      "name": "Dokümantasyon",
+      "entityType": "Belge",
+      "observations": [
+        "docs/plan.md: 7/8 özellik tamam, Run History planlandı",
+        "docs/rate-limit.md: In-memory sliding window rate limiter dokümantasyonu",
+        "docs/usage.md: Türkçe kullanım rehberi — kurulum, XML yükleme, AI analiz, dark mod",
+        "README.md: Kısa proje tanıtımı",
+        "AGENTS.md: Next.js v16 uyarısı",
+        "CLAUDE.md: Agent yönlendirme (@AGENTS.md)"
+      ]
+    },
+    {
+      "name": "Build & Config",
+      "entityType": "Yapılandırma",
+      "observations": [
+        "next.config.ts: Boş config (sadece type NextConfig)",
+        "postcss.config.mjs: @tailwindcss/postcss plugin (tek plugin)",
+        "eslint.config.mjs: next/core-web-vitals + next/typescript, globalIgnores ile",
+        "tsconfig.json: target ES2017, moduleResolution bundler, strict: true, paths @/* → ./src/*",
+        "components.json: shadcn/ui style base-nova, RSC true, lucide ikonlar",
+        ".gitignore: Standart Next.js (node_modules, .next, .env, .vercel, vs.)",
+        "Git reposu: Henüz başlatılmamış (lokal)"
+      ]
+    },
+    {
+      "name": "Next.js v16 Route Handler Kuralları",
+      "entityType": "Kural",
+      "observations": [
+        "Named export ile HTTP method fonksiyonları: GET, POST, PUT, DELETE, PATCH",
+        "Web API Request/Response kullanılır, NextApiRequest/NextApiResponse kullanılmaz",
+        "params bir Promise olarak gelir (v15+ değişikliği)",
+        "FormData için request.formData() kullanılır",
+        "Response.json() ile JSON dönüşü yapılır",
+        "Body parser konfigürasyonu gerekmez"
+      ]
+    },
+    {
+      "name": "BUG-001: PDF Export Dark Mode",
+      "entityType": "Bug",
+      "observations": [
+        "Hata: html2canvas v1.4.1 oklch() renk fonksiyonlarını desteklemiyor — 'Attempting to parse an unsupported color function lab'",
+        "Çözüm: src/components/pdf-export.tsx dosyasında capture öncesi DOM'a geçici <style> etiketi enjekte edildi",
+        "Tüm CSS değişkenlerinin hex/rgba karşılıkları hesaplandı (culori kütüphanesi ile OKLCH→hex dönüşümü)",
+        "LIGHT_OVERRIDE_CSS ve DARK_OVERRIDE_CSS sabitleri eklendi — :root, .light ve .dark selector'ları için hex değerler",
+        "injectColorOverride() fonksiyonu ile style etiketi capture öncesi eklenip capture sonrası temizleniyor",
+        "Dark mode'da :root ve .dark değişkenleri hex/rgba override ediliyor",
+        "Light modda da çalışmaya devam ediyor (regression yok)",
+        "✅ ÇÖZÜLDÜ (19 Mayıs 2026)"
+      ]
+    },
+    {
+      "name": "BUG-002: Sol Altta 3 issue Mesajı",
+      "entityType": "Bug",
+      "observations": [
+        "Hata: Next.js 16 DevIndicator sol alt köşede '3 issue' gösteriyordu — 3 ESLint hatası",
+        "Çözüm: 3 ESLint hatası düzeltildi",
+        "1. src/components/donut-chart.tsx satır 11: [key: string]: any → [key: string]: unknown (no-explicit-any)",
+        "2. src/components/pdf-export.tsx satır 97: let yOffset = margin → const yOffset = margin (prefer-const) — BUG-001 fix'i ile beraber düzeltildi",
+        "3. src/components/test-charts.tsx satır 340: DurationYAxisTickWrapper içindeki TickComponent'a displayName eklendi (react/display-name)",
+        "Ek temizlik: unused useState import kaldırıldı, unused activeIndex state ve hover handler'lar temizlendi",
+        "Sonuç: npm run lint → 0 errors, 0 warnings; npm run build → successful",
+        "✅ ÇÖZÜLDÜ (19 Mayıs 2026)"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "SmartDash",
+      "to": "Stack",
+      "relationType": "kullanır"
+    },
+    {
+      "from": "SmartDash",
+      "to": "MVP Özellikleri",
+      "relationType": "içerir"
+    },
+    {
+      "from": "SmartDash",
+      "to": "AI Agent Çalışma Düzeni",
+      "relationType": "şu şekilde geliştirilir"
+    },
+    {
+      "from": "SmartDash",
+      "to": "10 Haftalık Plan",
+      "relationType": "şu planla inşa edilir"
+    },
+    {
+      "from": "SmartDash",
+      "to": "Tema Sistemi",
+      "relationType": "şu tema ile görüntülenir"
+    },
+    {
+      "from": "SmartDash",
+      "to": "Dokümantasyon",
+      "relationType": "şu dokümanlara sahiptir"
+    },
+    {
+      "from": "SmartDash",
+      "to": "Build & Config",
+      "relationType": "şu yapılandırma ile çalışır"
+    },
+    {
+      "from": "SmartDash",
+      "to": "Next.js v16 Route Handler Kuralları",
+      "relationType": "şu kurallara uyar"
+    },
+    {
+      "from": "Kadirhan",
+      "to": "SmartDash",
+      "relationType": "geliştiriyor"
+    },
+    {
+      "from": "BUG-001: PDF Export Dark Mode",
+      "to": "SmartDash",
+      "relationType": "etkiler"
+    },
+    {
+      "from": "BUG-002: Sol Altta 3 issue Mesajı",
+      "to": "SmartDash",
+      "relationType": "etkiler"
+    }
+  ]
+}

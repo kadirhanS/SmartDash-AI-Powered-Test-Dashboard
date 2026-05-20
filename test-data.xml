@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SmartDash.TestSuite" tests="15" failures="3" errors="2" skipped="1" time="45.234" timestamp="2026-05-18T10:30:00">
+  <properties>
+    <property name="browser" value="chrome-125"/>
+    <property name="environment" value="staging"/>
+  </properties>
+  <testcase name="testLoginWithValidCredentials" classname="com.smartdash.auth.LoginTest" time="2.345" status="passed"/>
+  <testcase name="testLoginWithInvalidCredentials" classname="com.smartdash.auth.LoginTest" time="1.234" status="passed"/>
+  <testcase name="testLogoutFunctionality" classname="com.smartdash.auth.LoginTest" time="0.876" status="passed"/>
+  <testcase name="testDashboardLoadTime" classname="com.smartdash.dashboard.PerformanceTest" time="5.678" status="passed"/>
+  <testcase name="testChartRendering" classname="com.smartdash.dashboard.ChartTest" time="3.456" status="failed">
+    <failure message="Chart did not render within expected time" type="AssertionError">
+      <![CDATA[Expected chart to render in < 2000ms but took 3456ms]]>
+    </failure>
+  </testcase>
+  <testcase name="testDataFetchFromAPI" classname="com.smartdash.api.DataFetchTest" time="4.567" status="failed">
+    <failure message="API returned 500 status code" type="HttpError">
+      <![CDATA[GET /api/dashboard returned 500 Internal Server Error]]>
+    </failure>
+  </testcase>
+  <testcase name="testUserProfileUpdate" classname="com.smartdash.profile.UserTest" time="2.123" status="passed"/>
+  <testcase name="testDatabaseConnection" classname="com.smartdash.db.ConnectionTest" time="3.789" status="error">
+    <error message="Connection timeout after 3000ms" type="TimeoutError">
+      <![CDATA[Could not connect to database within timeout period]]>
+    </error>
+  </testcase>
+  <testcase name="testCacheInvalidation" classname="com.smartdash.cache.CacheTest" time="1.456" status="passed"/>
+  <testcase name="testWebSocketReconnection" classname="com.smartdash.ws.WebSocketTest" time="8.901" status="error">
+    <error message="WebSocket reconnection failed after 3 retries" type="WebSocketError">
+      <![CDATA[Max reconnection attempts reached without successful connection]]>
+    </error>
+  </testcase>
+  <testcase name="testNotificationSystem" classname="com.smartdash.notification.NotificationTest" time="2.567" status="passed"/>
+  <testcase name="testSearchFunctionality" classname="com.smartdash.search.SearchTest" time="3.234" status="failed">
+    <failure message="Search results did not match expected count" type="AssertionError">
+      <![CDATA[Expected 15 results but got 12]]>
+    </failure>
+  </testcase>
+  <testcase name="testDarkModeToggle" classname="com.smartdash.ui.UITest" time="1.123" status="passed"/>
+  <testcase name="testPDFExport" classname="com.smartdash.export.ExportTest" time="5.890" status="passed"/>
+  <testcase name="testMobileResponsiveLayout" classname="com.smartdash.ui.UITest" time="0.000" status="skipped">
+    <skipped message="Mobile testing not configured in this environment"/>
+  </testcase>
+</testsuite>
