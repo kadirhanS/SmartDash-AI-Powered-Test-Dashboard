@@ -345,8 +345,8 @@ export default function TestList({
       {/* Table */}
       <div className="overflow-hidden rounded-lg border">
         {/* Table Header */}
-        <div className="grid grid-cols-[0_1fr_70px_50px_0] gap-1 px-1.5 py-1.5 text-xs border-b bg-muted/30 md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5">
-          {/* # - hidden on mobile */}
+        <div className="flex flex-col gap-0.5 px-1.5 py-1.5 text-xs border-b bg-muted/30 md:grid md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5">
+          {/* # - desktop only */}
           <span className="hidden md:inline text-xs font-medium uppercase tracking-wider text-muted-foreground">
             #
           </span>
@@ -360,17 +360,44 @@ export default function TestList({
             onSort={handleSort}
           />
 
-          {/* Durum */}
-          <SortHeader
-            label="Durum"
-            field="status"
-            currentField={sortField}
-            direction={sortDirection}
-            onSort={handleSort}
-          />
+          {/* Mobile: second row — Durum + Süre + AI label */}
+          <div className="flex items-center gap-3 md:hidden">
+            <SortHeader
+              label="Durum"
+              field="status"
+              currentField={sortField}
+              direction={sortDirection}
+              onSort={handleSort}
+            />
+            <div className="ml-auto">
+              <SortHeader
+                label="Süre"
+                field="time"
+                currentField={sortField}
+                direction={sortDirection}
+                onSort={handleSort}
+              />
+            </div>
+            {aiCommentMap && (
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                AI
+              </span>
+            )}
+          </div>
 
-          {/* Süre */}
-          <div className="text-right">
+          {/* Desktop: Durum */}
+          <div className="hidden md:inline-flex">
+            <SortHeader
+              label="Durum"
+              field="status"
+              currentField={sortField}
+              direction={sortDirection}
+              onSort={handleSort}
+            />
+          </div>
+
+          {/* Desktop: Süre */}
+          <div className="hidden md:block text-right">
             <SortHeader
               label="Süre"
               field="time"
@@ -380,7 +407,7 @@ export default function TestList({
             />
           </div>
 
-          {/* AI Yorumu - hidden on mobile */}
+          {/* Desktop: AI */}
           {aiCommentMap && (
             <span className="hidden md:inline text-xs font-medium uppercase tracking-wider text-muted-foreground text-center">
               AI
@@ -411,19 +438,20 @@ export default function TestList({
                   <button
                     onClick={() => toggleRow(globalIdx)}
                     className={cn(
-                      "grid w-full grid-cols-[0_1fr_70px_50px_0] gap-1 px-1.5 py-1.5 text-left text-sm transition-colors md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5",
+                      "flex w-full flex-col gap-1.5 px-3 py-2.5 text-left text-sm transition-colors",
+                      "md:grid md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5",
                       "hover:bg-muted/50",
                       displayIdx % 2 === 1 && "bg-muted/20",
                     )}
                   >
-                    {/* # - hidden on mobile */}
-                    <span className="mt-0.5 text-xs text-muted-foreground hidden md:inline">
+                    {/* # - desktop only */}
+                    <span className="hidden md:inline mt-0.5 text-xs text-muted-foreground">
                       {globalIdx + 1}
                     </span>
 
-                    {/* Test Adı + Classname */}
+                    {/* Test Adı + Classname — full width on mobile */}
                     <div className="min-w-0">
-                      <span className="block truncate font-medium text-foreground">
+                      <span className="block truncate font-medium text-foreground text-sm">
                         {tc.name}
                       </span>
                       <span className="block truncate text-xs text-muted-foreground">
@@ -431,11 +459,43 @@ export default function TestList({
                       </span>
                     </div>
 
-                    {/* Durum Badge */}
-                    <div className="flex items-center">
+                    {/* Mobile: second row — Badge + Duration + AI/chevron */}
+                    <div className="flex items-center gap-3 md:hidden">
                       <span
                         className={cn(
-                          "inline-flex items-center rounded-full px-1.5 py-0.5 text-[10px] font-medium md:px-2 md:text-xs",
+                          "inline-flex items-center rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+                          STATUS_BADGE_CLASSES[tc.status],
+                        )}
+                      >
+                        {STATUS_LABELS[tc.status] || tc.status}
+                      </span>
+
+                      <span className="tabular-nums text-[11px] text-muted-foreground">
+                        {tc.time.toFixed(1)}s
+                      </span>
+
+                      <div className="flex-1" />
+
+                      {hasAIComment ? (
+                        <AICommentPopover
+                          comment={aiCommentMap!.get(tc.name)!}
+                        />
+                      ) : (
+                        <span className="inline-flex size-6 items-center justify-center">
+                          {isExpanded ? (
+                            <ChevronDown className="size-4 text-muted-foreground" />
+                          ) : (
+                            <ChevronRight className="size-4 text-muted-foreground" />
+                          )}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Desktop: Status badge */}
+                    <div className="hidden md:flex items-center">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
                           STATUS_BADGE_CLASSES[tc.status],
                         )}
                       >
@@ -443,14 +503,14 @@ export default function TestList({
                       </span>
                     </div>
 
-                    {/* Süre */}
-                    <div className="flex items-center justify-end">
-                      <span className="tabular-nums text-[11px] text-muted-foreground md:text-xs">
+                    {/* Desktop: Time */}
+                    <div className="hidden md:flex items-center justify-end">
+                      <span className="tabular-nums text-xs text-muted-foreground">
                         {tc.time.toFixed(1)}s
                       </span>
                     </div>
 
-                    {/* AI Yorumu - hidden on mobile */}
+                    {/* Desktop: AI/chevron */}
                     <div className="hidden md:flex items-center justify-center">
                       {hasAIComment ? (
                         <AICommentPopover
