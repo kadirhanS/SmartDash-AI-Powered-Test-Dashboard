@@ -1,13 +1,16 @@
 # SmartDash — AI Destekli Test Dashboard
 
+> **Canlı:** [smartdash-jet.vercel.app](https://smartdash-jet.vercel.app)
+
 JUnit XML test sonuçlarınızı yükleyin, AI ile analiz edin, grafiklerle görselleştirin ve PDF rapor olarak dışa aktarın.
 
 ## Özellikler
 
 - **Dosya Yükleme** — JUnit XML dosyalarını sürükle-bırak veya dosya seçici ile yükleyin
 - **AI Analiz** — OpenRouter üzerinden AI modelleri ile test sonuçlarınızı analiz edin
-- **Dashboard** — Test sonuçları, hata dağılımı, süre analizi grafikleri
+- **Dashboard** — Test sonuçları, hata dağılımı, süre analizi grafikleri (Pie, Bar, Donut, Speed Bars)
 - **Test Listesi** — Sıralama, filtreleme, arama ve sayfalama ile test senaryoları
+- **Run History** — Geçmiş yüklemelerinizi localStorage'da saklayın, tekrar görüntüleyin
 - **Dark/Light Mode** — Sistem tercihine göre otomatik tema
 - **PDF Export** — Profesyonel rapor formatında PDF çıktısı
 - **Responsive** — Mobil ve masaüstü uyumlu tasarım
@@ -34,12 +37,9 @@ Tarayıcınızda `http://localhost:3000` adresini açın.
 
 ## Deploy
 
-```bash
-npm run build
-npm start
-```
-
-Vercel'e tek tıkla deploy edilebilir.
+Vercel'e deploy edilmiştir:
+- **Production:** [smartdash-jet.vercel.app](https://smartdash-jet.vercel.app)
+- **Stack:** Next.js 16 + React 19 + TypeScript + Tailwind v4 + shadcn/ui
 
 ## Teknolojiler
 

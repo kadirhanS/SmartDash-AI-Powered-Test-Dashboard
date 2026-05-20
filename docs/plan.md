@@ -19,4 +19,9 @@
 - [x] Dark/Light mode
 - [x] PDF Export
 - [x] Responsive UI
-- [ ] Run History (planlandı)
+- [x] Run History (localStorage ile geçmiş yüklemeler)
+
+## Deploy
+- Canlı: [smartdash-jet.vercel.app](https://smartdash-jet.vercel.app)
+- Vercel (ücretsiz tier), Washington D.C. bölgesi
+- Build: 0 hata, Turbopack ile ~15sn
