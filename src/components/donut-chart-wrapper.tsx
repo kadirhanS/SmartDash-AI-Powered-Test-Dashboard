@@ -53,12 +53,12 @@ export function DonutChartWrapper({
   );
 
   return (
-    <div className="flex flex-row items-center gap-4 sm:gap-6">
+    <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-6">
       {/* Donut */}
       <div className="shrink-0">
         <DonutChart
           data={data}
-          size={200}
+          size={180}
           strokeWidth={22}
           animationDuration={0.8}
           animationDelayPerSegment={0.08}

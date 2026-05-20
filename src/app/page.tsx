@@ -206,25 +206,25 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-background">
       {/* ── Header ── */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center gap-4 px-4 lg:px-6">
+        <div className="flex h-16 items-center gap-3 px-4 lg:px-6">
           {/* Mobile sidebar toggle */}
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden size-9"
             onClick={() => setSidebarOpen(true)}
             aria-label="Filtreleri aç"
             title="Filtreler"
           >
-            <Filter className="size-4" />
+            <Filter className="size-5" />
           </Button>
 
-          <div className="flex items-center gap-2 font-semibold">
-            <BarChart3 className="size-5 text-primary" />
+          <div className="flex items-center gap-2.5 font-bold text-lg sm:text-base">
+            <BarChart3 className="size-6 sm:size-5 text-primary" />
             <span className="tracking-tight">SmartDash</span>
           </div>
 
-          <nav className="ml-auto flex items-center gap-6 text-sm">
+          <nav className="ml-auto flex items-center gap-4 sm:gap-6 text-sm sm:text-sm">
             <span className="hidden sm:inline font-medium text-foreground">Dashboard</span>
             <Button
               variant="ghost"
@@ -260,7 +260,7 @@ export default function Home() {
           aria-label="Filtreler paneli"
           className={cn(
             // Desktop
-            "hidden lg:block lg:w-56 lg:shrink-0 lg:border-r lg:self-start lg:sticky lg:top-14",
+            "hidden lg:block lg:w-56 lg:shrink-0 lg:border-r lg:self-start lg:sticky lg:top-16",
             // Mobile overlay
             sidebarOpen
               ? "fixed inset-y-0 left-0 z-50 block w-64 border-r bg-background shadow-xl transition-transform duration-300 translate-x-0"
@@ -276,14 +276,14 @@ export default function Home() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
-          <div className="mx-auto max-w-6xl space-y-6">
+        <main className="flex-1 px-3 py-4 lg:p-6">
+          <div className="mx-auto max-w-6xl space-y-4 lg:space-y-6">
             {/* Page heading */}
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">
                 Test Dashboard
               </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-muted-foreground">
                 JUnit XML sonuçlarınızı yükleyin, AI ile analiz edin,
                 grafiklerle görselleştirin.
               </p>
@@ -300,7 +300,7 @@ export default function Home() {
             />
 
             {/* File Upload + Summary — side by side on desktop */}
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
               <FileUpload onFileParsed={handleFileParsed} onFileRemove={handleFileRemove} />
 
               {/* Parsed Summary */}
@@ -366,9 +366,9 @@ export default function Home() {
             </div>
 
             {/* ── Main Grid: Left Data Column + Right AI Panel ── */}
-            <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+            <div className="grid gap-4 lg:gap-6 lg:grid-cols-[1fr_320px]">
               {/* Left column: Data cards */}
-              <div className="space-y-4">
+              <div className="space-y-3 lg:space-y-4">
 
                 {/* ── PDF Export Area: charts + summaries ── */}
                 <div id="pdf-export-area" className="space-y-4">
@@ -664,7 +664,7 @@ export default function Home() {
               </div>{/* end left column */}
 
               {/* Right column: AI Config Panel — sticky on desktop */}
-              <div className="space-y-4 lg:sticky lg:top-[67px] lg:self-start">
+              <div className="space-y-3 lg:space-y-4 lg:sticky lg:top-[73px] lg:self-start">
                 <AIConfigPanel
                   testSuite={parsedData}
                   onAnalysisComplete={handleAnalysisComplete}

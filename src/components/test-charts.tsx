@@ -13,6 +13,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { useState, useEffect } from "react";
 import type { TestSuite } from "@/lib/types";
 
 // ── Color palette (matches badge colors in page.tsx) ──
@@ -142,10 +143,10 @@ export function PieChartResults({
   const trackThickness = 35; // outerRadius - innerRadius = 80 - 45
 
   return (
-    <div className="flex flex-row items-center gap-3 sm:gap-6">
+    <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-6">
       {/* Donut Chart */}
-      <div className="shrink-0 w-[60%] max-w-[220px]">
-        <ResponsiveContainer width="100%" height={220}>
+      <div className="shrink-0 w-full max-w-[180px] sm:max-w-[220px]">
+        <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <ChartGradients />
 
@@ -188,7 +189,7 @@ export function PieChartResults({
           textAnchor="middle"
           dominantBaseline="central"
           fill="var(--foreground)"
-          fontSize={32}
+          fontSize={28}
           fontWeight={700}
           fontFamily="var(--font-sans)"
           className="tabular-nums"
@@ -198,11 +199,11 @@ export function PieChartResults({
         <text
           x="50%"
           y="50%"
-          dy={22}
+          dy={18}
           textAnchor="middle"
           dominantBaseline="central"
           fill="var(--muted-foreground)"
-          fontSize={11}
+          fontSize={10}
           fontWeight={500}
           fontFamily="var(--font-sans)"
         >
@@ -299,13 +300,16 @@ function DurationYAxisTick({
   y,
   payload,
   displayData,
+  isMobile,
 }: {
   x: number;
   y: number;
   payload: { value: string };
   displayData: Array<{ name: string; index: number }>;
+  isMobile?: boolean;
 }) {
   const item = displayData.find((d) => d.name === payload.value);
+  const fontSize = isMobile ? 9 : 11;
   return (
     <g transform={`translate(${x},${y})`}>
       <text
@@ -313,13 +317,13 @@ function DurationYAxisTick({
         y={0}
         dy={4}
         fill="var(--muted-foreground)"
-        fontSize={11}
+        fontSize={fontSize}
         textAnchor="end"
       >
         <tspan fill="var(--muted-foreground)" opacity={0.5}>
           #{item?.index}
         </tspan>
-        <tspan dx={4} fontWeight={600} fill="var(--foreground)">
+        <tspan dx={isMobile ? 2 : 4} fontWeight={600} fill="var(--foreground)">
           {payload.value}
         </tspan>
       </text>
@@ -327,7 +331,7 @@ function DurationYAxisTick({
   );
 }
 
-function DurationYAxisTickWrapper({ displayData }: { displayData: Array<{ name: string; index: number }> }) {
+function DurationYAxisTickWrapper({ displayData, isMobile }: { displayData: Array<{ name: string; index: number }>; isMobile?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const TickComponent = (props: any) => (
     <DurationYAxisTick
@@ -335,6 +339,7 @@ function DurationYAxisTickWrapper({ displayData }: { displayData: Array<{ name: 
       y={Number(props.y)}
       payload={{ value: String(props.payload?.value ?? "") }}
       displayData={displayData}
+      isMobile={isMobile}
     />
   );
   TickComponent.displayName = "DurationYAxisTickCustom";
@@ -346,22 +351,26 @@ function DurationBarLabel({
   y = 0,
   width = 0,
   value = 0,
+  isMobile,
 }: {
   x?: number;
   y?: number;
   width?: number;
   value?: number;
+  isMobile?: boolean;
 }) {
+  const fontSize = isMobile ? 9 : 12;
+  const offset = isMobile ? 4 : 6;
   return (
     <text
-      x={x + width + 6}
+      x={x + width + offset}
       y={y + 14}
       fill="var(--muted-foreground)"
-      fontSize={12}
+      fontSize={fontSize}
       textAnchor="start"
       className="tabular-nums"
     >
-      {typeof value === "number" ? `${value.toFixed(2)}sn` : ""}
+      {typeof value === "number" ? `${value.toFixed(isMobile ? 1 : 2)}sn` : ""}
     </text>
   );
 }
@@ -371,19 +380,32 @@ export function DurationChart({
 }: {
   testCases: TestSuite["testCases"];
 }) {
+  // Responsive YAxis width
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    addEventListener("resize", check);
+    return () => removeEventListener("resize", check);
+  }, []);
+
   if (testCases.length === 0) return null;
 
+  const maxNameLen = isMobile ? 18 : 28;
   const displayData = [...testCases]
     .sort((a, b) => b.time - a.time)
     .slice(0, 10)
     .map((tc, i) => ({
-      name: tc.name.length > 28 ? tc.name.substring(0, 28) + "…" : tc.name,
+      name: tc.name.length > maxNameLen ? tc.name.substring(0, maxNameLen) + "…" : tc.name,
       süre: tc.time,
       index: i + 1,
     }))
     .reverse();
 
   const hasMore = testCases.length > 10;
+  const yAxisWidth = isMobile ? 120 : 180;
+  const marginLeft = isMobile ? 8 : 24;
+  const marginRight = isMobile ? 44 : 60;
 
   return (
     <div>
@@ -394,7 +416,7 @@ export function DurationChart({
         <BarChart
           data={displayData}
           layout="vertical"
-          margin={{ left: 24, right: 60, top: 5, bottom: 30 }}
+          margin={{ left: marginLeft, right: marginRight, top: 5, bottom: 30 }}
         >
           <CartesianGrid
             strokeDasharray="3 3"
@@ -403,21 +425,21 @@ export function DurationChart({
           />
           <XAxis
             type="number"
-            fontSize={12}
+            fontSize={isMobile ? 10 : 12}
             tick={{ fill: "var(--muted-foreground)" }}
             label={{
               value: "süre (sn)",
               position: "bottom",
               offset: -2,
-              style: { fontSize: 12, fill: "var(--muted-foreground)" },
+              style: { fontSize: isMobile ? 10 : 12, fill: "var(--muted-foreground)" },
             }}
           />
           <YAxis
             type="category"
             dataKey="name"
-            fontSize={11}
-            tick={DurationYAxisTickWrapper({ displayData })}
-            width={180}
+            fontSize={isMobile ? 10 : 11}
+            tick={DurationYAxisTickWrapper({ displayData, isMobile })}
+            width={yAxisWidth}
             interval={0}
           />
           <Tooltip content={<ChartTooltip />} />
@@ -425,7 +447,7 @@ export function DurationChart({
             dataKey="süre"
             name="Süre"
             radius={[0, 6, 6, 0]}
-            label={<DurationBarLabel />}
+            label={<DurationBarLabel isMobile={isMobile} />}
           >
             {displayData.map((entry, idx) => (
               <Cell
