@@ -219,24 +219,25 @@ export default function Home() {
             <Filter className="size-5" />
           </Button>
 
-          <div className="flex items-center gap-2.5 font-bold text-lg sm:text-base">
-            <BarChart3 className="size-6 sm:size-5 text-primary" />
+          <div className="flex items-center gap-2 font-bold text-xl sm:text-base">
+            <BarChart3 className="size-7 sm:size-5 text-primary" />
             <span className="tracking-tight">SmartDash</span>
           </div>
 
-          <nav className="ml-auto flex items-center gap-4 sm:gap-6 text-sm sm:text-sm">
+          <nav className="ml-auto flex items-center gap-3 sm:gap-6 text-base sm:text-sm">
             <span className="hidden sm:inline font-medium text-foreground">Dashboard</span>
             <Button
               variant="ghost"
               size="icon"
+              className="size-10 sm:size-9"
               onClick={toggleTheme}
               aria-label="Tema değiştir"
               title="Tema değiştir"
               suppressHydrationWarning
             >
               {/* CSS-only dark mode icons — both always rendered, CSS shows/hides */}
-              <Sun className="size-4 block dark:hidden" />
-              <Moon className="size-4 hidden dark:block" />
+              <Sun className="size-5 sm:size-4 block dark:hidden" />
+              <Moon className="size-5 sm:size-4 hidden dark:block" />
             </Button>
           </nav>
         </div>
@@ -276,7 +277,7 @@ export default function Home() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 px-3 py-4 lg:p-6">
+        <main className="flex-1 px-2 py-3 sm:px-4 lg:p-6">
           <div className="mx-auto max-w-6xl space-y-4 lg:space-y-6">
             {/* Page heading */}
             <div>

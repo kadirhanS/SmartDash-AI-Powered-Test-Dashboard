@@ -345,9 +345,9 @@ export default function TestList({
       {/* Table */}
       <div className="overflow-hidden rounded-lg border">
         {/* Table Header */}
-        <div className="grid grid-cols-[24px_1fr_80px_60px] gap-1 px-2 py-2 text-xs border-b bg-muted/30 md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5">
-          {/* # */}
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground hidden md:inline">
+        <div className="grid grid-cols-[0_1fr_70px_50px_0] gap-1 px-1.5 py-1.5 text-xs border-b bg-muted/30 md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5">
+          {/* # - hidden on mobile */}
+          <span className="hidden md:inline text-xs font-medium uppercase tracking-wider text-muted-foreground">
             #
           </span>
 
@@ -411,7 +411,7 @@ export default function TestList({
                   <button
                     onClick={() => toggleRow(globalIdx)}
                     className={cn(
-                      "grid w-full grid-cols-[24px_1fr_80px_60px] gap-1 px-2 py-2 text-left text-sm transition-colors md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5",
+                      "grid w-full grid-cols-[0_1fr_70px_50px_0] gap-1 px-1.5 py-1.5 text-left text-sm transition-colors md:grid-cols-[40px_1fr_100px_80px_44px] md:gap-2 md:px-3 md:py-2.5",
                       "hover:bg-muted/50",
                       displayIdx % 2 === 1 && "bg-muted/20",
                     )}
@@ -422,7 +422,7 @@ export default function TestList({
                     </span>
 
                     {/* Test Adı + Classname */}
-                    <div className="min-w-[120px] md:min-w-0">
+                    <div className="min-w-0">
                       <span className="block truncate font-medium text-foreground">
                         {tc.name}
                       </span>
