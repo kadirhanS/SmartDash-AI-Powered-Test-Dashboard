@@ -14,12 +14,8 @@ import {
   Lightbulb,
   ChevronDown,
   ChevronUp,
-  Moon,
-  Sun,
-  Filter,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/file-upload";
 import dynamic from "next/dynamic";
   const AIConfigPanel = dynamic(() => import("@/components/ai-config-panel"), {
@@ -44,6 +40,7 @@ import { ErrorBarChart, DurationChart } from "@/components/test-charts";
 import { DonutChartWrapper } from "@/components/donut-chart-wrapper";
 import TestList from "@/components/test-list";
 import FilterSidebar from "@/components/filter-sidebar";
+import AppHeader from "@/components/app-header";
 import { useTheme } from "@/components/theme-provider";
 import ToastContainer from "@/components/toast";
 import { useToast } from "@/hooks/use-toast";
@@ -119,6 +116,7 @@ export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [expandedComments, setExpandedComments] = useState<Set<number>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     statusFilters: ["passed", "failed", "error", "skipped"],
     searchQuery: "",
@@ -204,44 +202,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* ── Header ── */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-16 items-center gap-3 px-4 lg:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden size-9"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Filtreleri aç"
-            title="Filtreler"
-          >
-            <Filter className="size-5" />
-          </Button>
-
-          <div className="flex items-center gap-2 font-bold text-xl sm:text-base">
-            <BarChart3 className="size-7 sm:size-5 text-primary" />
-            <span className="tracking-tight">SmartDash</span>
-          </div>
-
-          <nav className="ml-auto flex items-center gap-3 sm:gap-6 text-base sm:text-sm">
-            <span className="hidden sm:inline font-medium text-foreground">Dashboard</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-10 sm:size-9"
-              onClick={toggleTheme}
-              aria-label="Tema değiştir"
-              title="Tema değiştir"
-              suppressHydrationWarning
-            >
-              {/* CSS-only dark mode icons — both always rendered, CSS shows/hides */}
-              <Sun className="size-5 sm:size-4 block dark:hidden" />
-              <Moon className="size-5 sm:size-4 hidden dark:block" />
-            </Button>
-          </nav>
-        </div>
-      </header>
+      <AppHeader navOpen={navOpen} setNavOpen={setNavOpen} toggleTheme={toggleTheme} />
 
       {/* ── Body: Sidebar + Main ── */}
       <div className="flex flex-1 relative">
