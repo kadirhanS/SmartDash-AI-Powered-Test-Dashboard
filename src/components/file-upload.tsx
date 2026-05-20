@@ -111,7 +111,7 @@ export default function FileUpload({ onFileParsed, onFileRemove }: FileUploadPro
 
   return (
     <Card className="w-full">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         {!file ? (
           /* ── Drop Zone ── */
           <div
@@ -120,13 +120,13 @@ export default function FileUpload({ onFileParsed, onFileRemove }: FileUploadPro
             onDrop={handleDrop}
             onClick={() => inputRef.current?.click()}
             className={cn(
-              "flex cursor-pointer flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed p-8 transition-colors",
+              "flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed p-4 transition-colors",
               isDragging
                 ? "border-primary bg-primary/5"
                 : "border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50",
             )}
           >
-            <Upload className="size-10 text-muted-foreground" />
+            <Upload className="size-6 text-muted-foreground" />
 
             <div className="text-center">
               <p className="text-sm font-medium">

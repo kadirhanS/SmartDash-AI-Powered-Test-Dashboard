@@ -46,7 +46,7 @@ import ToastContainer from "@/components/toast";
 import { useToast } from "@/hooks/use-toast";
 import { useRunHistory } from "@/hooks/use-run-history";
 import RunHistory from "@/components/run-history";
-import { ChartSkeleton, TableSkeleton } from "@/components/skeletons";
+import type { TestSuite, FilterState } from "@/lib/types";
 const PdfExport = dynamic(
   () => import("@/components/pdf-export").then((mod) => mod.PdfExport),
   {
@@ -54,7 +54,6 @@ const PdfExport = dynamic(
     loading: () => null,
   }
 );
-import type { TestSuite, FilterState } from "@/lib/types";
 import type { AIAnalysisResponse } from "@/lib/ai-types";
 import { cn } from "@/lib/utils";
 
@@ -217,6 +216,7 @@ export default function Home() {
         )}
 
         <aside
+          id="filtreler"
           role="dialog"
           aria-modal="true"
           aria-label="Filtreler paneli"
@@ -252,14 +252,16 @@ export default function Home() {
             </div>
 
             {/* Run History — shows after first upload */}
-            <RunHistory
-              history={history}
-              activeId={activeId}
-              onSelect={selectHistoryItem}
-              onRemove={removeFromHistory}
-              onClear={clearHistory}
-              onLoad={handleHistoryLoad}
-            />
+            <div id="history" className="scroll-mt-20">
+              <RunHistory
+                history={history}
+                activeId={activeId}
+                onSelect={selectHistoryItem}
+                onRemove={removeFromHistory}
+                onClear={clearHistory}
+                onLoad={handleHistoryLoad}
+              />
+            </div>
 
             {/* File Upload + Summary — side by side on desktop */}
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
@@ -328,11 +330,13 @@ export default function Home() {
             </div>
 
             {/* ── Main Grid: Left Data Column + Right AI Panel ── */}
-            <div className="grid gap-4 lg:gap-6 lg:grid-cols-[1fr_320px]">
+            <section id="dashboard" className="scroll-mt-20">
+            <div className={cn("grid gap-4 lg:gap-6", parsedData ? "lg:grid-cols-[1fr_320px]" : "")}>
               {/* Left column: Data cards */}
               <div className="space-y-3 lg:space-y-4">
 
-                {/* ── PDF Export Area: charts + summaries ── */}
+                {/* ── PDF Export Area: charts + summaries — only when data is loaded ── */}
+                {parsedData && (
                 <div id="pdf-export-area" className="space-y-4">
                   {/* Stats grid — first row: results + errors */}
                   <div className="grid gap-4 sm:grid-cols-2">
@@ -348,16 +352,12 @@ export default function Home() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        {parsedData ? (
-                          <DonutChartWrapper
-                            passedCount={passedCount}
-                            failedCount={failedCount}
-                            errorCount={errorCount}
-                            skippedCount={skippedCount}
-                          />
-                        ) : (
-                          <ChartSkeleton height={200} />
-                        )}
+                        <DonutChartWrapper
+                          passedCount={passedCount}
+                          failedCount={failedCount}
+                          errorCount={errorCount}
+                          skippedCount={skippedCount}
+                        />
                       </CardContent>
                     </Card>
 
@@ -373,15 +373,11 @@ export default function Home() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        {parsedData ? (
-                          <ErrorBarChart
-                            failedCount={failedCount}
-                            errorCount={errorCount}
-                            skippedCount={skippedCount}
-                          />
-                        ) : (
-                          <ChartSkeleton height={200} />
-                        )}
+                        <ErrorBarChart
+                          failedCount={failedCount}
+                          errorCount={errorCount}
+                          skippedCount={skippedCount}
+                        />
                       </CardContent>
                     </Card>
                   </div>
@@ -398,43 +394,39 @@ export default function Home() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      {parsedData ? (
-                        <div className="space-y-3">
-                          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
-                            <span className="flex items-center gap-1.5">
-                              <span className="text-muted-foreground">Toplam:</span>
-                              <span className="font-medium tabular-nums">{parsedData.time.toFixed(2)}s</span>
+                      <div className="space-y-3">
+                        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground">Toplam:</span>
+                            <span className="font-medium tabular-nums">{parsedData.time.toFixed(2)}s</span>
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground">Ortalama:</span>
+                            <span className="font-medium tabular-nums">
+                              {parsedData.testCases.length > 0
+                                ? `${(parsedData.time / parsedData.testCases.length).toFixed(2)}s`
+                                : "—"}
                             </span>
-                            <span className="flex items-center gap-1.5">
-                              <span className="text-muted-foreground">Ortalama:</span>
-                              <span className="font-medium tabular-nums">
-                                {parsedData.testCases.length > 0
-                                  ? `${(parsedData.time / parsedData.testCases.length).toFixed(2)}s`
-                                  : "—"}
-                              </span>
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground">En hızlı:</span>
+                            <span className="font-medium tabular-nums text-emerald-600 dark:text-emerald-400">
+                              {parsedData.testCases.length > 0
+                                ? `${Math.min(...parsedData.testCases.map((tc) => tc.time)).toFixed(2)}s`
+                                : "—"}
                             </span>
-                            <span className="flex items-center gap-1.5">
-                              <span className="text-muted-foreground">En hızlı:</span>
-                              <span className="font-medium tabular-nums text-emerald-600 dark:text-emerald-400">
-                                {parsedData.testCases.length > 0
-                                  ? `${Math.min(...parsedData.testCases.map((tc) => tc.time)).toFixed(2)}s`
-                                  : "—"}
-                              </span>
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground">En yavaş:</span>
+                            <span className="font-medium tabular-nums text-red-600 dark:text-red-400">
+                              {parsedData.testCases.length > 0
+                                ? `${Math.max(...parsedData.testCases.map((tc) => tc.time)).toFixed(2)}s`
+                                : "—"}
                             </span>
-                            <span className="flex items-center gap-1.5">
-                              <span className="text-muted-foreground">En yavaş:</span>
-                              <span className="font-medium tabular-nums text-red-600 dark:text-red-400">
-                                {parsedData.testCases.length > 0
-                                  ? `${Math.max(...parsedData.testCases.map((tc) => tc.time)).toFixed(2)}s`
-                                  : "—"}
-                              </span>
-                            </span>
-                          </div>
-                          <DurationChart testCases={parsedData.testCases} />
+                          </span>
                         </div>
-                      ) : (
-                        <ChartSkeleton height={160} />
-                      )}
+                        <DurationChart testCases={parsedData.testCases} />
+                      </div>
                     </CardContent>
                   </Card>
 
@@ -484,7 +476,7 @@ export default function Home() {
                         </p>
                       </CardContent>
                     </Card>
-                  ) : (
+                  ) : parsedData ? (
                     <Card>
                       <CardHeader>
                         <div className="flex items-center gap-2">
@@ -505,10 +497,12 @@ export default function Home() {
                         </div>
                       </CardContent>
                     </Card>
-                  )}
-                </div>{/* end pdf-export-area */}
+                  ) : null}
+                </div>
+                )}
 
                 {/* ── Test Listesi ── */}
+                {parsedData && (
                 <Card id="pdf-test-list">
                   <CardHeader>
                     <div className="flex items-center gap-2">
@@ -516,24 +510,20 @@ export default function Home() {
                       <CardTitle>Test Listesi</CardTitle>
                     </div>
                     <CardDescription>
-                      Tüm test senaryoları &middot;{" "}
-                      {parsedData ? `${parsedData.testCases.length} test` : "yüklenmedi"}
+                      Tüm test senaryoları &middot; {parsedData.testCases.length} test
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {parsedData ? (
-                      <TestList
-                        key={parsedData.name}
-                        testCases={parsedData.testCases}
-                        aiComments={analysisResult?.comments}
-                        filters={filters}
-                        onFiltersChange={setFilters}
-                      />
-                    ) : (
-                      <TableSkeleton rows={5} />
-                    )}
+                    <TestList
+                      key={parsedData.name}
+                      testCases={parsedData.testCases}
+                      aiComments={analysisResult?.comments}
+                      filters={filters}
+                      onFiltersChange={setFilters}
+                    />
                   </CardContent>
                 </Card>
+                )}
 
                 {/* ── AI Analysis Details ── */}
                 {analysisResult && analysisResult.comments.length > 0 && (
@@ -626,7 +616,7 @@ export default function Home() {
               </div>{/* end left column */}
 
               {/* Right column: AI Config Panel — sticky on desktop */}
-              <div className="space-y-3 lg:space-y-4 lg:sticky lg:top-[73px] lg:self-start">
+              <div id="analiz" className={cn("space-y-3 lg:space-y-4", parsedData ? "lg:sticky lg:top-[73px] lg:self-start" : "")}>
                 <AIConfigPanel
                   testSuite={parsedData}
                   onAnalysisComplete={handleAnalysisComplete}
@@ -659,6 +649,7 @@ export default function Home() {
                 </Card>
               </div>
             </div>{/* end main grid */}
+            </section>{/* end dashboard */}
           </div>
         </main>
       </div>

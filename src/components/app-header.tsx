@@ -1,14 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import {
   Menu,
   X,
   BarChart3,
   Clock,
   BrainCircuit,
-  Settings,
   Filter,
-  Bell,
   Sun,
   Moon,
 } from "lucide-react";
@@ -29,14 +28,19 @@ const navLinks = [
   { id: "analiz", label: "AI Analiz", icon: BrainCircuit },
 ];
 
-const drawerLinks = [
-  ...navLinks,
-  { id: "ayarlar", label: "Ayarlar", icon: Settings },
-];
+// Drawer uses the same links as nav + filter
 
 export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeaderProps) {
-  // Şu an tek sayfa olduğu için aktif link manuel yönetiliyor
-  const activeLink = "dashboard";
+  const [activeLink, setActiveLink] = useState("dashboard");
+
+  const scrollToSection = (sectionId: string) => {
+    setNavOpen(false);
+    setActiveLink(sectionId);
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <>
@@ -66,6 +70,7 @@ export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeade
             {navLinks.map((link) => (
               <button
                 key={link.id}
+                onClick={() => scrollToSection(link.id)}
                 className={cn(
                   "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors",
                   activeLink === link.id
@@ -81,17 +86,6 @@ export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeade
 
           {/* Right side */}
           <div className="ml-auto flex items-center gap-1 sm:gap-2">
-            {/* Notification button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-9"
-              aria-label="Bildirimler"
-              title="Bildirimler"
-            >
-              <Bell className="size-5" />
-            </Button>
-
             {/* Theme toggle */}
             <Button
               variant="ghost"
@@ -147,10 +141,10 @@ export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeade
 
             {/* Nav links */}
             <nav className="p-4 space-y-1">
-              {drawerLinks.map((link) => (
+              {navLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => setNavOpen(false)}
+                  onClick={() => scrollToSection(link.id)}
                   className={cn(
                     "flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium rounded-md transition-colors",
                     activeLink === link.id
@@ -167,7 +161,7 @@ export default function AppHeader({ navOpen, setNavOpen, toggleTheme }: AppHeade
 
               {/* Filter link */}
               <button
-                onClick={() => setNavOpen(false)}
+                onClick={() => scrollToSection("filtreler")}
                 className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
               >
                 <Filter className="size-5" />
