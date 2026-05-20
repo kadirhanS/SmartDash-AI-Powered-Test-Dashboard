@@ -1,6 +1,6 @@
 # SmartDash — AI Destekli Test Dashboard
 
-> **Canlı:** [smartdash-jet.vercel.app](https://smartdash-jet.vercel.app)
+> **Canlı:** [smartdash-jet.vercel.app](https://smartdash-jet.vercel.app) [![Vercel](https://img.shields.io/badge/deployed%20on-Vercel-black)](https://smartdash-jet.vercel.app)
 
 JUnit XML test sonuçlarınızı yükleyin, AI ile analiz edin, grafiklerle görselleştirin ve PDF rapor olarak dışa aktarın.
 
